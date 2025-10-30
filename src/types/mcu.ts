@@ -1,0 +1,37 @@
+export interface MCUData {
+  "Nama Karyawan": string;
+  "PATID": string;
+  "SEKSI": string;
+  "DEPARTEMEN": string;
+  "NPK": string;
+  "Jenis Kelamin": string;
+  "Tanggal lahir": string;
+  "Usia": string;
+  "Tanggal MCU": string;
+  "Riwayat Penyakit Sekarang": string;
+  "Riwayat Penyakit Dahulu": string;
+  "Riwayat Penyakit Keluarga": string;
+  "Riwayat Pengobatan": string;
+  "Riwayat Rawat Inap": string;
+  "Riwayat Operasi": string;
+  "Riwayat Kecelakaan": string;
+  "Merokok /Vape": string;
+  "Jumlah Batang": string;
+  "Alkohol": string;
+  "Olahraga": string;
+  "Tekanan Darah MmHg": string;
+  "Nadi ()": string;
+  "Suhu Badan C": string;
+  "Frekuensi nafas ()": string;
+  "Tinggi (cm)": string;
+  "Berat ()": string;
+  "BMI": string;
+  "Status Gizi": string;
+  "Visus Mata Kanan": string;
+  "Keadaan umum Kanan": string;
+  "Visus Mata Kiri": string;
+  "Keadaan Umum Kiri": string;
+  "Test Buta Warna": string;
+  "Kesimpulan": string;
+  "Saran": string;
+}
