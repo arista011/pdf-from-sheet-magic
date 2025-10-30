@@ -34,4 +34,6 @@ export interface MCUData {
   "Test Buta Warna": string;
   "Kesimpulan": string;
   "Saran": string;
+  "Kriteria Status": string;
+  "Status_Resume": string;
 }

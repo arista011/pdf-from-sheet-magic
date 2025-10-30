@@ -1,22 +1,26 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MCUData } from '@/types/mcu';
+import logoImage from '@/assets/mitra-keluarga-logo.png';
 
 export const generateMCUPDF = (data: MCUData) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   
-  // Header with logo placeholder
+  // Header with logo
   doc.setFillColor(0, 165, 233);
   doc.rect(0, 0, pageWidth, 25, 'F');
+  
+  // Add logo
+  doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
   
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('Mitra Keluarga', 15, 12);
+  doc.text('Mitra Keluarga', 28, 12);
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  doc.text('Grand Wisata', 15, 18);
+  doc.text('Grand Wisata', 28, 18);
   
   doc.setFontSize(8);
   doc.text('life.love.laughter', pageWidth - 45, 15);
@@ -61,13 +65,14 @@ export const generateMCUPDF = (data: MCUData) => {
   // Header on page 2
   doc.setFillColor(0, 165, 233);
   doc.rect(0, 0, pageWidth, 25, 'F');
+  doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('Mitra Keluarga', 15, 12);
+  doc.text('Mitra Keluarga', 28, 12);
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  doc.text('Grand Wisata', 15, 18);
+  doc.text('Grand Wisata', 28, 18);
   doc.setFontSize(8);
   doc.text('life.love.laughter', pageWidth - 45, 15);
   
@@ -181,13 +186,14 @@ export const generateMCUPDF = (data: MCUData) => {
   // Header on page 3
   doc.setFillColor(0, 165, 233);
   doc.rect(0, 0, pageWidth, 25, 'F');
+  doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('Mitra Keluarga', 15, 12);
+  doc.text('Mitra Keluarga', 28, 12);
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  doc.text('Grand Wisata', 15, 18);
+  doc.text('Grand Wisata', 28, 18);
   doc.setFontSize(8);
   doc.text('life.love.laughter', pageWidth - 45, 15);
   
@@ -292,12 +298,24 @@ export const generateMCUPDF = (data: MCUData) => {
   });
   
   // Kesimpulan dan Saran
-  if (data["Kesimpulan"] || data["Saran"]) {
+  if (data["Kesimpulan"] || data["Saran"] || data["Kriteria Status"]) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
     
     if (yPos > 250) {
       doc.addPage();
-      yPos = 20;
+      // Add header on new page
+      doc.setFillColor(0, 165, 233);
+      doc.rect(0, 0, pageWidth, 25, 'F');
+      doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Mitra Keluarga', 28, 12);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Grand Wisata', 28, 18);
+      doc.setTextColor(0, 0, 0);
+      yPos = 35;
     }
     
     if (data["Kesimpulan"]) {
@@ -316,7 +334,18 @@ export const generateMCUPDF = (data: MCUData) => {
     if (data["Saran"]) {
       if (yPos > 250) {
         doc.addPage();
-        yPos = 20;
+        doc.setFillColor(0, 165, 233);
+        doc.rect(0, 0, pageWidth, 25, 'F');
+        doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Mitra Keluarga', 28, 12);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Grand Wisata', 28, 18);
+        doc.setTextColor(0, 0, 0);
+        yPos = 35;
       }
       
       doc.setFontSize(12);
@@ -328,6 +357,65 @@ export const generateMCUPDF = (data: MCUData) => {
       doc.setFontSize(9);
       const saranLines = doc.splitTextToSize(data["Saran"], pageWidth - 30);
       doc.text(saranLines, 15, yPos);
+      yPos += saranLines.length * 5 + 10;
+    }
+    
+    // Status Pemeriksaan
+    if (data["Kriteria Status"] || data["Status_Resume"]) {
+      const status = data["Kriteria Status"] || data["Status_Resume"] || '';
+      
+      if (yPos > 250) {
+        doc.addPage();
+        doc.setFillColor(0, 165, 233);
+        doc.rect(0, 0, pageWidth, 25, 'F');
+        doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Mitra Keluarga', 28, 12);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Grand Wisata', 28, 18);
+        doc.setTextColor(0, 0, 0);
+        yPos = 35;
+      }
+      
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('STATUS PEMERIKSAAN', 15, yPos);
+      yPos += 8;
+      
+      // Determine color based on status
+      let bgColor: [number, number, number] = [16, 185, 129]; // Default green
+      let textColor: [number, number, number] = [255, 255, 255];
+      
+      const statusUpper = status.toUpperCase();
+      
+      if (statusUpper.includes('FIT TO WORK WITH NOTE') || statusUpper.includes('CATATAN')) {
+        bgColor = [234, 179, 8]; // Yellow
+        textColor = [255, 255, 255];
+      } else if (statusUpper.includes('UNFIT TO WORK') || statusUpper.includes('TIDAK FIT')) {
+        bgColor = [239, 68, 68]; // Red
+        textColor = [255, 255, 255];
+      } else if (statusUpper.includes('FIT TO WORK') || statusUpper.includes('FIT')) {
+        bgColor = [16, 185, 129]; // Green
+        textColor = [255, 255, 255];
+      }
+      
+      // Draw status box
+      doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+      const boxWidth = pageWidth - 30;
+      const boxHeight = 15;
+      doc.roundedRect(15, yPos - 5, boxWidth, boxHeight, 3, 3, 'F');
+      
+      // Draw status text
+      doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text(status.toUpperCase(), pageWidth / 2, yPos + 3, { align: 'center' });
+      
+      // Reset text color
+      doc.setTextColor(0, 0, 0);
     }
   }
   
