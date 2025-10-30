@@ -278,16 +278,16 @@ export const generateMCUPDF = (data: MCUData) => {
     }
   });
   
-  yPos = (doc as any).lastAutoTable.finalY + 5;
+  let yPos2 = (doc as any).lastAutoTable.finalY + 5;
   doc.setFontSize(11);
-  doc.text('2.3 Test Buta Warna', 15, yPos);
+  doc.text('2.3 Test Buta Warna', 15, yPos2);
   
   const butaWarnaData = [
     ['Test buta warna', data["Test Buta Warna"] || '-'],
   ];
   
   autoTable(doc, {
-    startY: yPos + 2,
+    startY: yPos2 + 2,
     body: butaWarnaData,
     theme: 'plain',
     styles: { fontSize: 9, cellPadding: 1.5 },
@@ -297,13 +297,60 @@ export const generateMCUPDF = (data: MCUData) => {
     }
   });
   
-  // Kesimpulan dan Saran
-  if (data["Kesimpulan"] || data["Saran"] || data["Kriteria Status"]) {
-    yPos = (doc as any).lastAutoTable.finalY + 10;
+  // Kesimpulan dan Saran - Add new page for this section
+  doc.addPage();
+  
+  // Header on new page
+  doc.setFillColor(0, 165, 233);
+  doc.rect(0, 0, pageWidth, 25, 'F');
+  doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Mitra Keluarga', 28, 12);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Grand Wisata', 28, 18);
+  doc.setFontSize(8);
+  doc.text('life.love.laughter', pageWidth - 45, 15);
+  doc.setTextColor(0, 0, 0);
+  
+  let yPos3 = 35;
+  
+  // V. Kesimpulan
+  if (data["Kesimpulan"]) {
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('V. Kesimpulan', 15, yPos3);
+    yPos3 += 7;
     
-    if (yPos > 250) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    const kesimpulanLines = doc.splitTextToSize(data["Kesimpulan"], pageWidth - 30);
+    doc.text(kesimpulanLines, 15, yPos3);
+    yPos3 += kesimpulanLines.length * 5 + 10;
+  }
+  
+  // VI. Saran
+  if (data["Saran"]) {
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('VI. Saran', 15, yPos3);
+    yPos3 += 7;
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    const saranLines = doc.splitTextToSize(data["Saran"], pageWidth - 30);
+    doc.text(saranLines, 15, yPos3);
+    yPos3 += saranLines.length * 5 + 10;
+  }
+  
+  // VII. Kriteria Status MCU
+  if (data["Kriteria Status"] || data["Status_Resume"]) {
+    const status = data["Kriteria Status"] || data["Status_Resume"] || '';
+    
+    if (yPos3 > 230) {
       doc.addPage();
-      // Add header on new page
       doc.setFillColor(0, 165, 233);
       doc.rect(0, 0, pageWidth, 25, 'F');
       doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
@@ -314,109 +361,97 @@ export const generateMCUPDF = (data: MCUData) => {
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.text('Grand Wisata', 28, 18);
+      doc.setFontSize(8);
+      doc.text('life.love.laughter', pageWidth - 45, 15);
       doc.setTextColor(0, 0, 0);
-      yPos = 35;
+      yPos3 = 35;
     }
     
-    if (data["Kesimpulan"]) {
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Kesimpulan:', 15, yPos);
-      yPos += 5;
-      
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      const kesimpulanLines = doc.splitTextToSize(data["Kesimpulan"], pageWidth - 30);
-      doc.text(kesimpulanLines, 15, yPos);
-      yPos += kesimpulanLines.length * 5 + 5;
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('VII. Kriteria Status MCU', 15, yPos3);
+    yPos3 += 10;
+    
+    // Status text
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Kriteria Status MCU: ${status.toUpperCase()}`, 15, yPos3);
+    yPos3 += 10;
+    
+    // Date and location
+    const currentDate = new Date();
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    const dateStr = `Bekasi, ${currentDate.getDate()} ${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text(dateStr, 15, yPos3);
+    yPos3 += 20;
+    
+    // Doctor signature section
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    
+    // Add logo watermark for signature area
+    doc.addImage(logoImage, 'PNG', 15, yPos3 - 5, 10, 10);
+    doc.text('Mitra', 28, yPos3);
+    yPos3 += 4;
+    doc.text('Keluarga', 28, yPos3);
+    yPos3 += 15;
+    
+    // Doctor name
+    const doctorName = data["Dokter Pemeriksa"] || 'dr. Eka Rizki Febriyanti';
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text(doctorName, 15, yPos3);
+    yPos3 += 5;
+    
+    // Grand Wisata
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Grand Wisata', 15, yPos3);
+    yPos3 += 5;
+    
+    // SIP License
+    doc.setFontSize(8);
+    doc.text('SIP : KS.08/1217/DPMTSP/DU/2024', 15, yPos3);
+    yPos3 += 7;
+    
+    // Position title
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.text('DOKTER MEDICAL CHECK UP', 15, yPos3);
+    
+    // Status box - colored based on status
+    let bgColor: [number, number, number] = [16, 185, 129]; // Default green
+    
+    const statusUpper = status.toUpperCase();
+    
+    if (statusUpper.includes('FIT TO WORK WITH NOTE') || statusUpper.includes('CATATAN')) {
+      bgColor = [234, 179, 8]; // Yellow
+    } else if (statusUpper.includes('UNFIT TO WORK') || statusUpper.includes('TIDAK FIT')) {
+      bgColor = [239, 68, 68]; // Red
+    } else if (statusUpper.includes('FIT TO WORK') || statusUpper.includes('FIT')) {
+      bgColor = [16, 185, 129]; // Green
     }
     
-    if (data["Saran"]) {
-      if (yPos > 250) {
-        doc.addPage();
-        doc.setFillColor(0, 165, 233);
-        doc.rect(0, 0, pageWidth, 25, 'F');
-        doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Mitra Keluarga', 28, 12);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Grand Wisata', 28, 18);
-        doc.setTextColor(0, 0, 0);
-        yPos = 35;
-      }
-      
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Saran:', 15, yPos);
-      yPos += 5;
-      
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      const saranLines = doc.splitTextToSize(data["Saran"], pageWidth - 30);
-      doc.text(saranLines, 15, yPos);
-      yPos += saranLines.length * 5 + 10;
-    }
+    // Draw status box on the right side
+    const boxWidth = 70;
+    const boxHeight = 12;
+    const boxX = pageWidth - boxWidth - 15;
+    const boxY = yPos3 - 50;
     
-    // Status Pemeriksaan
-    if (data["Kriteria Status"] || data["Status_Resume"]) {
-      const status = data["Kriteria Status"] || data["Status_Resume"] || '';
-      
-      if (yPos > 250) {
-        doc.addPage();
-        doc.setFillColor(0, 165, 233);
-        doc.rect(0, 0, pageWidth, 25, 'F');
-        doc.addImage(logoImage, 'PNG', 10, 5, 15, 15);
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Mitra Keluarga', 28, 12);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Grand Wisata', 28, 18);
-        doc.setTextColor(0, 0, 0);
-        yPos = 35;
-      }
-      
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text('STATUS PEMERIKSAAN', 15, yPos);
-      yPos += 8;
-      
-      // Determine color based on status
-      let bgColor: [number, number, number] = [16, 185, 129]; // Default green
-      let textColor: [number, number, number] = [255, 255, 255];
-      
-      const statusUpper = status.toUpperCase();
-      
-      if (statusUpper.includes('FIT TO WORK WITH NOTE') || statusUpper.includes('CATATAN')) {
-        bgColor = [234, 179, 8]; // Yellow
-        textColor = [255, 255, 255];
-      } else if (statusUpper.includes('UNFIT TO WORK') || statusUpper.includes('TIDAK FIT')) {
-        bgColor = [239, 68, 68]; // Red
-        textColor = [255, 255, 255];
-      } else if (statusUpper.includes('FIT TO WORK') || statusUpper.includes('FIT')) {
-        bgColor = [16, 185, 129]; // Green
-        textColor = [255, 255, 255];
-      }
-      
-      // Draw status box
-      doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      const boxWidth = pageWidth - 30;
-      const boxHeight = 15;
-      doc.roundedRect(15, yPos - 5, boxWidth, boxHeight, 3, 3, 'F');
-      
-      // Draw status text
-      doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text(status.toUpperCase(), pageWidth / 2, yPos + 3, { align: 'center' });
-      
-      // Reset text color
-      doc.setTextColor(0, 0, 0);
-    }
+    doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+    doc.roundedRect(boxX, boxY, boxWidth, boxHeight, 3, 3, 'F');
+    
+    // Draw status text
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.text(status.toUpperCase(), boxX + boxWidth / 2, boxY + 7, { align: 'center' });
+    
+    // Reset text color
+    doc.setTextColor(0, 0, 0);
   }
   
   // Footer on all pages
