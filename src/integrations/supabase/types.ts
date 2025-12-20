@@ -146,6 +146,95 @@ export type Database = {
         }
         Relationships: []
       }
+      medical_documents: {
+        Row: {
+          created_at: string
+          document_type: string
+          examination_date: string | null
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          notes: string | null
+          patient_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_type: string
+          examination_date?: string | null
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          notes?: string | null
+          patient_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: string
+          examination_date?: string | null
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          notes?: string | null
+          patient_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_documents_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          alamat: string | null
+          created_at: string
+          id: string
+          jenis_kelamin: string | null
+          nama: string
+          no_rm: string
+          no_telepon: string | null
+          perusahaan: string | null
+          tanggal_lahir: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alamat?: string | null
+          created_at?: string
+          id?: string
+          jenis_kelamin?: string | null
+          nama: string
+          no_rm: string
+          no_telepon?: string | null
+          perusahaan?: string | null
+          tanggal_lahir?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alamat?: string | null
+          created_at?: string
+          id?: string
+          jenis_kelamin?: string | null
+          nama?: string
+          no_rm?: string
+          no_telepon?: string | null
+          perusahaan?: string | null
+          tanggal_lahir?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       pdf_history: {
         Row: {
           file_name: string
