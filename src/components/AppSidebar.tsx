@@ -32,16 +32,16 @@ const menuItems = [
   {
     group: "Data MCU",
     items: [
-      { title: "Upload Excel", url: "/", icon: Upload },
-      { title: "Data Tersimpan", url: "/mcu-data", icon: Database },
-      { title: "Riwayat PDF", url: "/pdf-history", icon: History },
+      { title: "Upload Excel", url: "/mcu/upload", icon: Upload },
+      { title: "Data Tersimpan", url: "/mcu/data", icon: Database },
+      { title: "Riwayat PDF", url: "/mcu/pdf-history", icon: History },
     ],
   },
   {
     group: "Pasien",
     items: [
       { title: "Daftar Pasien", url: "/patients", icon: Users },
-      { title: "Tambah Pasien", url: "/patients/add", icon: UserPlus },
+      { title: "Tambah Pasien", url: "/patients/new", icon: UserPlus },
     ],
   },
   {
