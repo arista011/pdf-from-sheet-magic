@@ -14,6 +14,185 @@ export type Database = {
   }
   public: {
     Tables: {
+      doctor_conclusions: {
+        Row: {
+          created_at: string
+          diagnosis: string | null
+          doctor_id: string
+          doctor_name: string | null
+          doctor_sip: string | null
+          id: string
+          kesimpulan: string | null
+          kriteria_status: string | null
+          mcu_case_id: string
+          saran: string | null
+          status_resume: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diagnosis?: string | null
+          doctor_id: string
+          doctor_name?: string | null
+          doctor_sip?: string | null
+          id?: string
+          kesimpulan?: string | null
+          kriteria_status?: string | null
+          mcu_case_id: string
+          saran?: string | null
+          status_resume?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diagnosis?: string | null
+          doctor_id?: string
+          doctor_name?: string | null
+          doctor_sip?: string | null
+          id?: string
+          kesimpulan?: string | null
+          kriteria_status?: string | null
+          mcu_case_id?: string
+          saran?: string | null
+          status_resume?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doctor_conclusions_mcu_case_id_fkey"
+            columns: ["mcu_case_id"]
+            isOneToOne: true
+            referencedRelation: "mcu_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mcu_cases: {
+        Row: {
+          assigned_doctor: string | null
+          assigned_nurse: string | null
+          case_number: string
+          created_at: string
+          created_by: string
+          id: string
+          patient_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_doctor?: string | null
+          assigned_nurse?: string | null
+          case_number: string
+          created_at?: string
+          created_by: string
+          id?: string
+          patient_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_doctor?: string | null
+          assigned_nurse?: string | null
+          case_number?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          patient_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mcu_cases_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mcu_documents: {
+        Row: {
+          created_at: string
+          document_type: string
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          mcu_case_id: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          document_type: string
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          mcu_case_id: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          mcu_case_id?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mcu_documents_mcu_case_id_fkey"
+            columns: ["mcu_case_id"]
+            isOneToOne: false
+            referencedRelation: "mcu_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mcu_generated_pdfs: {
+        Row: {
+          created_at: string
+          email_sent: boolean | null
+          email_sent_at: string | null
+          file_name: string
+          file_path: string | null
+          generated_by: string
+          id: string
+          mcu_case_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_sent?: boolean | null
+          email_sent_at?: string | null
+          file_name: string
+          file_path?: string | null
+          generated_by: string
+          id?: string
+          mcu_case_id: string
+        }
+        Update: {
+          created_at?: string
+          email_sent?: boolean | null
+          email_sent_at?: string | null
+          file_name?: string
+          file_path?: string | null
+          generated_by?: string
+          id?: string
+          mcu_case_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mcu_generated_pdfs_mcu_case_id_fkey"
+            columns: ["mcu_case_id"]
+            isOneToOne: false
+            referencedRelation: "mcu_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mcu_records: {
         Row: {
           alkohol: string | null
@@ -193,6 +372,113 @@ export type Database = {
           },
         ]
       }
+      nursing_assessments: {
+        Row: {
+          alkohol: string | null
+          berat: string | null
+          bmi: string | null
+          catatan_perawat: string | null
+          created_at: string
+          frekuensi_nafas: string | null
+          id: string
+          jumlah_batang: string | null
+          keadaan_umum_mata_kanan: string | null
+          keadaan_umum_mata_kiri: string | null
+          mcu_case_id: string
+          merokok_vape: string | null
+          nadi: string | null
+          nurse_id: string
+          olahraga: string | null
+          riwayat_kecelakaan: string | null
+          riwayat_operasi: string | null
+          riwayat_pengobatan: string | null
+          riwayat_penyakit_dahulu: string | null
+          riwayat_penyakit_keluarga: string | null
+          riwayat_penyakit_sekarang: string | null
+          riwayat_rawat_inap: string | null
+          status_gizi: string | null
+          suhu_badan: string | null
+          tekanan_darah: string | null
+          test_buta_warna: string | null
+          tinggi: string | null
+          updated_at: string
+          visus_mata_kanan: string | null
+          visus_mata_kiri: string | null
+        }
+        Insert: {
+          alkohol?: string | null
+          berat?: string | null
+          bmi?: string | null
+          catatan_perawat?: string | null
+          created_at?: string
+          frekuensi_nafas?: string | null
+          id?: string
+          jumlah_batang?: string | null
+          keadaan_umum_mata_kanan?: string | null
+          keadaan_umum_mata_kiri?: string | null
+          mcu_case_id: string
+          merokok_vape?: string | null
+          nadi?: string | null
+          nurse_id: string
+          olahraga?: string | null
+          riwayat_kecelakaan?: string | null
+          riwayat_operasi?: string | null
+          riwayat_pengobatan?: string | null
+          riwayat_penyakit_dahulu?: string | null
+          riwayat_penyakit_keluarga?: string | null
+          riwayat_penyakit_sekarang?: string | null
+          riwayat_rawat_inap?: string | null
+          status_gizi?: string | null
+          suhu_badan?: string | null
+          tekanan_darah?: string | null
+          test_buta_warna?: string | null
+          tinggi?: string | null
+          updated_at?: string
+          visus_mata_kanan?: string | null
+          visus_mata_kiri?: string | null
+        }
+        Update: {
+          alkohol?: string | null
+          berat?: string | null
+          bmi?: string | null
+          catatan_perawat?: string | null
+          created_at?: string
+          frekuensi_nafas?: string | null
+          id?: string
+          jumlah_batang?: string | null
+          keadaan_umum_mata_kanan?: string | null
+          keadaan_umum_mata_kiri?: string | null
+          mcu_case_id?: string
+          merokok_vape?: string | null
+          nadi?: string | null
+          nurse_id?: string
+          olahraga?: string | null
+          riwayat_kecelakaan?: string | null
+          riwayat_operasi?: string | null
+          riwayat_pengobatan?: string | null
+          riwayat_penyakit_dahulu?: string | null
+          riwayat_penyakit_keluarga?: string | null
+          riwayat_penyakit_sekarang?: string | null
+          riwayat_rawat_inap?: string | null
+          status_gizi?: string | null
+          suhu_badan?: string | null
+          tekanan_darah?: string | null
+          test_buta_warna?: string | null
+          tinggi?: string | null
+          updated_at?: string
+          visus_mata_kanan?: string | null
+          visus_mata_kiri?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nursing_assessments_mcu_case_id_fkey"
+            columns: ["mcu_case_id"]
+            isOneToOne: true
+            referencedRelation: "mcu_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       patients: {
         Row: {
           alamat: string | null
@@ -321,15 +607,47 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_mcu_case_number: { Args: never; Returns: string }
+      get_user_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "dokter" | "perawat"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -456,6 +774,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "dokter", "perawat"],
+    },
   },
 } as const
