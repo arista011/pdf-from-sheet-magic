@@ -2,95 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Medical Professional Design System - Blue-White Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Medical Blue-White Theme */
+    --background: 210 50% 98%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 199 89% 48%;
+    /* Medical Blue */
+    --primary: 210 85% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 76% 36%;
+    /* Success Green */
+    --secondary: 152 60% 42%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Light Blue Muted */
+    --muted: 210 40% 94%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 199 89% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 70% 92%;
+    --accent-foreground: 210 85% 35%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Medical Red for warnings */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Warning Orange */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --border: 210 31% 88%;
+    --input: 210 31% 88%;
+    --ring: 210 85% 45%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.625rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Sidebar - Medical Theme */
+    --sidebar-background: 210 85% 45%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 210 85% 45%;
+    --sidebar-accent: 210 80% 55%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 210 70% 55%;
+    --sidebar-ring: 0 0% 100%;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Medical Status Colors */
+    --status-fit: 152 60% 42%;
+    --status-fit-note: 38 92% 50%;
+    --status-unfit: 0 72% 51%;
+    --status-pending: 210 60% 60%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 215 25% 10%;
+    --foreground: 210 40% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 25% 13%;
+    --card-foreground: 210 40% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 25% 13%;
+    --popover-foreground: 210 40% 95%;
 
-    --primary: 199 89% 48%;
+    --primary: 210 80% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 76% 36%;
+    --secondary: 152 55% 45%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 215 25% 18%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 199 89% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 50% 25%;
+    --accent-foreground: 210 80% 75%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --warning: 38 85% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 210 80% 55%;
+
+    --sidebar-background: 215 25% 13%;
+    --sidebar-foreground: 210 40% 95%;
+    --sidebar-primary: 210 80% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 215 25% 18%;
+    --sidebar-accent-foreground: 210 40% 95%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 210 80% 55%;
+
+    --status-fit: 152 55% 45%;
+    --status-fit-note: 38 85% 55%;
+    --status-unfit: 0 62% 45%;
+    --status-pending: 210 55% 55%;
   }
 }
 
@@ -100,6 +116,65 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Medical Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Medical Card Styles */
+  .medical-card {
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow;
+  }
+
+  /* Status Badges */
+  .status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .status-fit {
+    background-color: hsl(var(--status-fit) / 0.15);
+    color: hsl(var(--status-fit));
+    border: 1px solid hsl(var(--status-fit) / 0.3);
+  }
+
+  .status-fit-note {
+    background-color: hsl(var(--status-fit-note) / 0.15);
+    color: hsl(var(--status-fit-note));
+    border: 1px solid hsl(var(--status-fit-note) / 0.3);
+  }
+
+  .status-unfit {
+    background-color: hsl(var(--status-unfit) / 0.15);
+    color: hsl(var(--status-unfit));
+    border: 1px solid hsl(var(--status-unfit) / 0.3);
+  }
+
+  .status-pending {
+    background-color: hsl(var(--status-pending) / 0.15);
+    color: hsl(var(--status-pending));
+    border: 1px solid hsl(var(--status-pending) / 0.3);
+  }
+
+  /* Workflow Step Indicator */
+  .workflow-step {
+    @apply flex items-center justify-center w-10 h-10 rounded-full text-sm font-semibold transition-colors;
+  }
+
+  .workflow-step-active {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .workflow-step-completed {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .workflow-step-pending {
+    @apply bg-muted text-muted-foreground;
   }
 }
